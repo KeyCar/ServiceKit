@@ -8,36 +8,36 @@
 
 import Foundation
 
-protocol ModelRequestEncoderDelegate {
+public protocol ModelRequestEncoderDelegate {
     func encode<T>(_ value: T) throws -> Data where T : Encodable
 }
 
-class ModelRequestJSONEncoder: ModelRequestEncoderDelegate {
+public class ModelRequestJSONEncoder: ModelRequestEncoderDelegate {
     
-    let encoder: JSONEncoder
+    public let encoder: JSONEncoder
     
-    init(encoder: JSONEncoder) {
+    public init(encoder: JSONEncoder) {
         self.encoder = encoder
     }
     
-    func encode<T>(_ value: T) throws -> Data where T : Encodable {
+    public func encode<T>(_ value: T) throws -> Data where T : Encodable {
         return try encoder.encode(value)
     }
 }
 
-enum URLEncoderError: Error {
+public enum URLEncoderError: Error {
     case unableToConvertToDictionary, unableToCreateQueryString
 }
 
-class ModelRequestURLEncoder: ModelRequestEncoderDelegate {
+public class ModelRequestURLEncoder: ModelRequestEncoderDelegate {
     
-    let encoder: JSONEncoder
+    public let encoder: JSONEncoder
     
     init(encoder: JSONEncoder) {
         self.encoder = encoder
     }
     
-    func encode<T>(_ value: T) throws -> Data where T : Encodable {
+    public func encode<T>(_ value: T) throws -> Data where T : Encodable {
         let data = try encoder.encode(value)
         guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any] else {
             throw URLEncoderError.unableToConvertToDictionary

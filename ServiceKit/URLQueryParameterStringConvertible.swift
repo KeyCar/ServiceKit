@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol URLQueryParameterStringConvertible {
+public protocol URLQueryParameterStringConvertible {
     var queryParameters: String { get }
 }
 
@@ -19,7 +19,7 @@ extension Dictionary : URLQueryParameterStringConvertible {
      string will be @"day=Tuesday&month=January".
      @return The computed parameters string.
      */
-    var queryParameters: String {
+    public var queryParameters: String {
         var parts: [String] = []
         for (key, value) in self {
             let part = String(format: "%@=%@",
@@ -38,7 +38,7 @@ extension URL {
      @param parametersDictionary The query parameter dictionary to add.
      @return A new URL.
      */
-    func appendingQueryParameters(_ parametersDictionary : Dictionary<String, String>) -> URL {
+    public func appendingQueryParameters(_ parametersDictionary : Dictionary<String, String>) -> URL {
         let URLString : String = String(format: "%@?%@", self.absoluteString, parametersDictionary.queryParameters)
         return URL(string: URLString)!
     }

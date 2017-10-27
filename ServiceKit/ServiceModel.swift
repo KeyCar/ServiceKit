@@ -8,18 +8,18 @@
 
 import Foundation
 
-protocol ServiceModel: Codable {
+public protocol ServiceModel: Codable {
     static var serviceClassName: String { get }
     static var identifierKeyPath: AnyKeyPath? { get }
 }
 
 extension ServiceModel {
     
-    static var identifierKeyPath: AnyKeyPath? {
+    public static var identifierKeyPath: AnyKeyPath? {
         return nil
     }
     
-    static var query: Query<Self> {
+    public static var query: Query<Self> {
         return Query<Self>()
     }
     
@@ -27,7 +27,7 @@ extension ServiceModel {
         return URLSession(configuration: .default)
     }
     
-    func deleteInBackground(response: EmptyResponse) {
+    public func deleteInBackground(response: EmptyResponse) {
         guard let identifier = serviceModelIdentifier(forValue: self) else {
             fatalError("object without identifer key path")
         }
@@ -38,7 +38,7 @@ extension ServiceModel {
         }.resume()
     }
     
-    func saveInBackground(response: ModelResponse<Self>) {
+    public func saveInBackground(response: ModelResponse<Self>) {
         let identifier = serviceModelIdentifier(forValue: self)
         let service = Service.shared
         let method: HTTPMethod = identifier != nil ? .put : .post
@@ -53,7 +53,7 @@ extension ServiceModel {
         }
     }
     
-    func saveRelatedValueInBackground<T>(relatedValue: T, response: ModelResponse<T>) where T : ServiceModel {
+    public func saveRelatedValueInBackground<T>(relatedValue: T, response: ModelResponse<T>) where T : ServiceModel {
         guard let identifier = serviceModelIdentifier(forValue: self) else {
             fatalError("root object without identifer key path")
         }

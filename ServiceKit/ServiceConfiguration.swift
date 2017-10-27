@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ServiceConfiguration {
-    var url: URL
-    var headers: [String : String]?
+public struct ServiceConfiguration {
+    public var url: URL
+    public var headers: [String : String]?
 }

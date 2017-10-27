@@ -8,29 +8,29 @@
 
 import Foundation
 
-typealias ModelResponse<T> = (success: (T) -> Void, failure: (Error) -> Void, completion: () -> Void)
-typealias EmptyResponse = (success: () -> Void, failure: (Error) -> Void, completion: () -> Void)
+public typealias ModelResponse<T> = (success: (T) -> Void, failure: (Error) -> Void, completion: () -> Void)
+public typealias EmptyResponse = (success: () -> Void, failure: (Error) -> Void, completion: () -> Void)
 
-enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get = "GET", post = "POST", put = "PUT", delete = "DELETE"
 }
 
-class Service {
+public class Service {
     
-    static let shared = Service()
+    public static let shared = Service()
     
-    var configuration: ServiceConfiguration?
-    var responseHandlerDelegate: ModelResponseHandlerDelegate?
-    var requestEncoderDelegate: ModelRequestEncoderDelegate?
+    public var configuration: ServiceConfiguration?
+    public var responseHandlerDelegate: ModelResponseHandlerDelegate?
+    public var requestEncoderDelegate: ModelRequestEncoderDelegate?
     
     private init() { }
     
-    func request<T>(for type: T.Type, with identifier: String? = nil, parameters: [URLQueryItem]? = nil, method: HTTPMethod = .get) -> URLRequest where T : ServiceModel {
+    public func request<T>(for type: T.Type, with identifier: String? = nil, parameters: [URLQueryItem]? = nil, method: HTTPMethod = .get) -> URLRequest where T : ServiceModel {
         let paths = [type.serviceClassName, identifier].flatMap { $0 }
         return request(with: paths, parameters: parameters, method: method)
     }
     
-    func request<T, U>(for type: T.Type, with identifier: String, relatedType: U.Type, relatedTypeIdentifier: String? = nil, parameters: [URLQueryItem]? = nil, method: HTTPMethod = .get) -> URLRequest where T : ServiceModel, U : ServiceModel {
+    public func request<T, U>(for type: T.Type, with identifier: String, relatedType: U.Type, relatedTypeIdentifier: String? = nil, parameters: [URLQueryItem]? = nil, method: HTTPMethod = .get) -> URLRequest where T : ServiceModel, U : ServiceModel {
         let paths = [type.serviceClassName, identifier, relatedType.serviceClassName, relatedTypeIdentifier].flatMap { $0 }
         return request(with: paths, parameters: parameters, method: method)
     }

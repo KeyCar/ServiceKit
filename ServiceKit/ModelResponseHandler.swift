@@ -8,29 +8,29 @@
 
 import Foundation
 
-protocol ModelResponseHandlerDelegate {
+public protocol ModelResponseHandlerDelegate {
     func handleModelResponse<T>(data: Data?, urlResponse: URLResponse?, decoding: T.Type, error: Error?, response: ModelResponse<T>) where T : Codable
     func handleEmptyResponse(data: Data?, urlResponse: URLResponse?, error: Error?, response: EmptyResponse)
 }
 
-class ModelResponseHandler: ModelResponseHandlerDelegate {
+public class ModelResponseHandler: ModelResponseHandlerDelegate {
     
-    let decoder: JSONDecoder
+    public let decoder: JSONDecoder
     
-    var resultsKey: String?
+    public var resultsKey: String?
     
-    init(decoder: JSONDecoder) {
+    public init(decoder: JSONDecoder) {
         self.decoder = decoder
     }
     
-    func handleModelResponse<T>(data: Data?, urlResponse: URLResponse?, decoding: T.Type, error: Error?, response: ModelResponse<T>) where T : Codable {
+    public func handleModelResponse<T>(data: Data?, urlResponse: URLResponse?, decoding: T.Type, error: Error?, response: ModelResponse<T>) where T : Codable {
         DispatchQueue.main.async {
             let result = self.resolveResponse(data: data, urlResponse: urlResponse, decoding: decoding, error: error)
             self.buildResponse(response: response, result: result)
         }
     }
     
-    func handleEmptyResponse(data: Data?, urlResponse: URLResponse?, error: Error?, response: EmptyResponse) {
+    public func handleEmptyResponse(data: Data?, urlResponse: URLResponse?, error: Error?, response: EmptyResponse) {
         DispatchQueue.main.async {
             if let error = error {
                 response.failure(error)

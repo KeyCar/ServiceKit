@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct NetworkError: LocalizedError {
-    let statusCode: Int
-    var errorDescription: String? {
+public struct NetworkError: LocalizedError {
+    public let statusCode: Int
+    public var errorDescription: String? {
         return HTTPURLResponse.localizedString(forStatusCode: statusCode)
     }
-    var data: Data?
+    public var data: Data?
 }
 

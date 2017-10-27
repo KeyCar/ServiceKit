@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Query<A: ServiceModel> {
+public class Query<A: ServiceModel> {
     
     private let service = Service.shared
     private var parameters: [URLQueryItem] = []
@@ -16,35 +16,35 @@ class Query<A: ServiceModel> {
         return URLSession.shared
     }
     
-    var customResponseHandlerDelegate: ModelResponseHandlerDelegate?
+    public var customResponseHandlerDelegate: ModelResponseHandlerDelegate?
     
     private var responseHandlerDelegate: ModelResponseHandlerDelegate? {
         return customResponseHandlerDelegate ?? service.responseHandlerDelegate
     }
     
-    func whereKey(_ key: AnyHashable, equalsTo value: Any) {
+    public func whereKey(_ key: AnyHashable, equalsTo value: Any) {
         parameters.append(URLQueryItem(name: "\(key)", value: "\(value)"))
     }
     
-    func findAllInBackground(response: ModelResponse<[A]>) {
+    public func findAllInBackground(response: ModelResponse<[A]>) {
         session.dataTask(with: service.request(for: A.self, parameters: parameters)) { (data, urlResponse, error) in
             self.responseHandlerDelegate?.handleModelResponse(data: data, urlResponse: urlResponse, decoding: [A].self, error: error, response: response)
         }.resume()
     }
     
-    func findObjectInBackground(with identifier: String? = nil, response: ModelResponse<A>) {
+    public func findObjectInBackground(with identifier: String? = nil, response: ModelResponse<A>) {
         session.dataTask(with: service.request(for: A.self, with: identifier, parameters: parameters)) { (data, urlResponse, error) in
             self.responseHandlerDelegate?.handleModelResponse(data: data, urlResponse: urlResponse, decoding: A.self, error: error, response: response)
         }.resume()
     }
     
-    func findAllReleatedObjectsInBackground<B>(with identifier: String, relatedObjectType: B.Type, response: ModelResponse<[B]>) where B : ServiceModel {
+    public func findAllReleatedObjectsInBackground<B>(with identifier: String, relatedObjectType: B.Type, response: ModelResponse<[B]>) where B : ServiceModel {
         session.dataTask(with: service.request(for: A.self, with: identifier, relatedType: relatedObjectType, parameters: parameters)) { (data, urlResponse, error) in
             self.responseHandlerDelegate?.handleModelResponse(data: data, urlResponse: urlResponse, decoding: [B].self, error: error, response: response)
         }.resume()
     }
     
-    func findReleatedObjectInBackground<B>(with identifier: String, relatedObjectType: B, relatedObjectIdentifier: String, response: ModelResponse<B>) where B : ServiceModel {
+    public func findReleatedObjectInBackground<B>(with identifier: String, relatedObjectType: B, relatedObjectIdentifier: String, response: ModelResponse<B>) where B : ServiceModel {
         session.dataTask(with: service.request(for: A.self, with: identifier, relatedType: B.self, relatedTypeIdentifier: relatedObjectIdentifier, parameters: parameters)) { (data, urlResponse, error) in
             self.responseHandlerDelegate?.handleModelResponse(data: data, urlResponse: urlResponse, decoding: B.self, error: error, response: response)
         }.resume()

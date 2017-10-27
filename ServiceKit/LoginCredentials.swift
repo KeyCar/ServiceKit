@@ -8,25 +8,25 @@
 
 import Foundation
 
-protocol LoginCredentials: ServiceModel {
+public protocol LoginCredentials: ServiceModel {
     associatedtype Model : ServiceModel
 }
 
 extension LoginCredentials {
     
-    static var identifierKeyPath: AnyKeyPath? {
+    public static var identifierKeyPath: AnyKeyPath? {
         return nil
     }
     
-    var session: URLSession {
+    public var session: URLSession {
         return .shared
     }
     
-    var service: Service {
+    public var service: Service {
         return .shared
     }
     
-    func login<Model>(response: ModelResponse<Model>) where Model : ServiceModel {
+    public func login<Model>(response: ModelResponse<Model>) where Model : ServiceModel {
         var request = service.request(for: Self.self, method: .post)
         let encoder = service.requestEncoderDelegate
         do {
