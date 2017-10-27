@@ -33,7 +33,7 @@ public class ModelRequestURLEncoder: ModelRequestEncoderDelegate {
     
     public let encoder: JSONEncoder
     
-    init(encoder: JSONEncoder) {
+    public init(encoder: JSONEncoder) {
         self.encoder = encoder
     }
     

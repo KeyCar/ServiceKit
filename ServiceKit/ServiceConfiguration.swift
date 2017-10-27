@@ -11,4 +11,10 @@ import Foundation
 public struct ServiceConfiguration {
     public var url: URL
     public var headers: [String : String]?
+    
+    public init(url: URL, headers: [String : String]? = nil) {
+        self.url = url
+        self.headers = headers
+    }
+    
 }
