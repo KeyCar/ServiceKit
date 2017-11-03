@@ -51,7 +51,6 @@ public class ModelRequestURLEncoder: ModelRequestEncoderDelegate {
         guard let queryStringData = nonNullValuesDictionary.queryParameters.data(using: .utf8) else {
             throw URLEncoderError.unableToCreateQueryString
         }
-        print(String(data: queryStringData, encoding: .utf8)!)
         return queryStringData
     }
 }
