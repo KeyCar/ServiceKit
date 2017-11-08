@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.name         = "ServiceKit"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "A Generic Rest Kit in swift"
   s.description  = "This framework was made to help developers to build their apps without having to worry about creating the service layer using urls and etc"
   s.homepage     = "https://github.com/KeyCar/ServiceKit"

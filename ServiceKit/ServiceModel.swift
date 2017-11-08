@@ -63,9 +63,9 @@ extension ServiceModel {
         var request = service.request(for: Self.self, with: identifier, relatedType: T.self, relatedTypeIdentifier: relatedValueIdentifier, method: method)
         do {
             request.httpBody = try service.requestEncoderDelegate?.encode(relatedValue)
-            session.dataTask(with: request, completionHandler: { (data, urlResponse, error) in
+            session.dataTask(with: request) { (data, urlResponse, error) in
                 service.responseHandlerDelegate?.handleModelResponse(data: data, urlResponse: urlResponse, decoding: T.self, error: error, response: response)
-            })
+            }.resume()
         } catch {
             response.failure(error)
         }
